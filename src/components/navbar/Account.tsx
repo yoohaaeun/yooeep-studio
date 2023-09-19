@@ -3,9 +3,11 @@ import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { login, logout, onUserStateChange } from '../../api/firebase';
 import { dropdownVariants } from '../../utils';
+import { Link } from 'react-router-dom';
 
 interface IUser {
   displayName: string;
+  isAdmin: boolean;
 }
 
 export default function Account() {
@@ -47,7 +49,11 @@ export default function Account() {
             {!user && <motion.li onClick={login}>Login</motion.li>}
             <motion.li>Wish List</motion.li>
             {user && <motion.li onClick={logout}>Logout</motion.li>}
-            <motion.li>제품 등록</motion.li>
+            {user?.isAdmin && (
+              <motion.li>
+                <Link to='/products/new'>제품 등록</Link>
+              </motion.li>
+            )}
           </motion.ul>
         )}
       </AnimatePresence>
