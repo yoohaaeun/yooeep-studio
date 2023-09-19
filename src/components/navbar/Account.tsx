@@ -4,8 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { login, logout, onUserStateChange } from '../../api/firebase';
 import { dropdownVariants } from '../../utils';
 
+interface IUser {
+  displayName: string;
+}
+
 export default function Account() {
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<IUser>();
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
 
@@ -39,10 +43,10 @@ export default function Account() {
             exit='hidden'
             className='absolute py-5  text-xs leading-6 whitespace-nowrap cursor-pointer'
           >
+            {user && <motion.li>Hi! {user.displayName} 👋🏻</motion.li>}
             {!user && <motion.li onClick={login}>Login</motion.li>}
-            {user && <motion.li onClick={logout}>Logout</motion.li>}
-            <motion.li>My Page</motion.li>
             <motion.li>Wish List</motion.li>
+            {user && <motion.li onClick={logout}>Logout</motion.li>}
             <motion.li>제품 등록</motion.li>
           </motion.ul>
         )}
