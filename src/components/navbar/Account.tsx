@@ -10,19 +10,8 @@ export default function Account() {
   const location = useLocation();
 
   useEffect(() => {
-    onUserStateChange((user: any) => {
-      console.log(user);
-      setUser(user);
-    });
+    onUserStateChange(setUser);
   }, []);
-
-  const handleLogin = () => {
-    login().then(setUser);
-  };
-
-  const handleLogout = () => {
-    logout().then(setUser);
-  };
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -50,8 +39,8 @@ export default function Account() {
             exit='hidden'
             className='absolute py-5  text-xs leading-6 whitespace-nowrap cursor-pointer'
           >
-            {!user && <motion.li onClick={handleLogin}>Login</motion.li>}
-            {user && <motion.li onClick={handleLogout}>Logout</motion.li>}
+            {!user && <motion.li onClick={login}>Login</motion.li>}
+            {user && <motion.li onClick={logout}>Logout</motion.li>}
             <motion.li>My Page</motion.li>
             <motion.li>Wish List</motion.li>
             <motion.li>제품 등록</motion.li>
