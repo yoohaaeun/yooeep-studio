@@ -5,10 +5,11 @@ import './index.css';
 import App from './App';
 import AllProducts from './pages/AllProducts';
 import Home from './pages/Home';
-import MyCart from './pages/MyCart';
 import NotFound from './pages/NotFound';
 import ProductDetail from './pages/ProductDetail';
 import NewProduct from './pages/NewProduct';
+import ProtectedRoute from './pages/ProtectedRoute';
+import MyCart from './pages/MyCart';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
       { path: '/products', element: <AllProducts /> },
       {
         path: '/products/new',
-        element: <NewProduct />,
+        element: (
+          <ProtectedRoute requireAdmin>
+            <NewProduct />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/products/:id',

@@ -4,20 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { login, logout, onUserStateChange } from '../../api/firebase';
 import { dropdownVariants } from '../../utils';
 import { Link } from 'react-router-dom';
-
-interface IUser {
-  displayName: string;
-  isAdmin: boolean;
-}
+import { useAuthContext } from '../context/AuthContext';
 
 export default function Account() {
-  const [user, setUser] = useState<IUser>();
+  const authContext = useAuthContext();
+  const { user, login, logout } = authContext || {};
+
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    onUserStateChange(setUser);
-  }, []);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -45,7 +39,11 @@ export default function Account() {
             exit='hidden'
             className='absolute py-5  text-xs leading-6 whitespace-nowrap cursor-pointer'
           >
-            {user && <motion.li>Hi! {user.displayName} 👋🏻</motion.li>}
+            {user && (
+              <motion.li>
+                {user.isAdmin ? 'Hi Admin 😋' : `Hi! ${user.displayName} 👋🏻`}
+              </motion.li>
+            )}
             {!user && <motion.li onClick={login}>Login</motion.li>}
             <motion.li>Wish List</motion.li>
             {user && <motion.li onClick={logout}>Logout</motion.li>}
