@@ -11,11 +11,10 @@ interface ProductFormData {
 }
 
 export default function NewProduct() {
-  const { handleSubmit, register, watch } = useForm<ProductFormData>();
+  const { handleSubmit, register, watch, reset } = useForm<ProductFormData>();
+
   const [imagePreview, setImagePreview] = useState<string | null>();
-
   const image = watch('image');
-
   useEffect(() => {
     if (image && image.length > 0) {
       const file = image[0];
@@ -24,11 +23,12 @@ export default function NewProduct() {
   }, [image]);
 
   const onSubmit = (data: ProductFormData) => {
+    reset();
     console.log(data);
   };
 
   return (
-    <section className='pt-20'>
+    <section className='pt-40'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type='file' placeholder='이미지' {...register('image')} />
         {imagePreview && <img src={imagePreview} alt='Product Preview' />}

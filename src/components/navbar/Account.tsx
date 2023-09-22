@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { login, logout, onUserStateChange } from '../../api/firebase';
 import { dropdownVariants } from '../../utils';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
@@ -45,7 +44,7 @@ export default function Account() {
               </motion.li>
             )}
             {!user && <motion.li onClick={login}>Login</motion.li>}
-            <motion.li>Wish List</motion.li>
+            {user && <motion.li>Wish List</motion.li>}
             {user && <motion.li onClick={logout}>Logout</motion.li>}
             {user?.isAdmin && (
               <motion.li>
