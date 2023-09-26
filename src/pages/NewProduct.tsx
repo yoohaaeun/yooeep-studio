@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { uploadImage } from '../api/uploader';
 
 interface ProductFormData {
   image: FileList;
@@ -13,25 +14,31 @@ interface ProductFormData {
 export default function NewProduct() {
   const { handleSubmit, register, watch, reset } = useForm<ProductFormData>();
 
-  const [imagePreview, setImagePreview] = useState<string | null>();
+  const [file, setFile] = useState<File | null>(null);
+
   const image = watch('image');
   useEffect(() => {
     if (image && image.length > 0) {
       const file = image[0];
-      setImagePreview(URL.createObjectURL(file));
+      setFile(file);
     }
   }, [image]);
 
-  const onSubmit = (data: ProductFormData) => {
+  const onSubmit = () => {
+    if (file) {
+      uploadImage(file).then((url) => {
+        console.log(url);
+      });
+    }
     reset();
-    console.log(data);
+    setFile(null);
   };
 
   return (
     <section className='pt-40'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type='file' placeholder='이미지' {...register('image')} />
-        {imagePreview && <img src={imagePreview} alt='Product Preview' />}
+        {file && <img src={URL.createObjectURL(file)} alt='Product Preview' />}
 
         <input
           type='text'
