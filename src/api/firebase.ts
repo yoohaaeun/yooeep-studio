@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
+  User,
 } from 'firebase/auth';
 import { getDatabase, ref, get } from 'firebase/database';
 
@@ -28,21 +29,32 @@ export function logout() {
   signOut(auth).catch(console.error);
 }
 
-export async function onUserStateChange(callback: any) {
+export interface IUser extends User {
+  displayName: string;
+  isAdmin: boolean;
+}
+
+export async function onUserStateChange(
+  callback: (user: IUser | null) => void
+) {
   onAuthStateChanged(auth, async (user) => {
     const updatedUser = user ? await adminUser(user) : null;
     callback(updatedUser);
   });
 }
 
-async function adminUser(user: any) {
-  return get(ref(database, `admins`)) //
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const admin = snapshot.val();
-        const isAdmin = admin.includes(user.uid);
-        return { ...user, isAdmin };
-      }
-      return user;
-    });
+async function adminUser(user: User | null): Promise<IUser | null> {
+  if (!user) {
+    return null;
+  }
+
+  const adminsSnapshot = await get(ref(database, `admins`));
+
+  if (adminsSnapshot.exists()) {
+    const admin = adminsSnapshot.val();
+    const isAdmin = admin.includes(user.uid);
+    return { ...(user as IUser), isAdmin };
+  } else {
+    return user as IUser;
+  }
 }

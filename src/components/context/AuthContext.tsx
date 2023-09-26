@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { login, logout, onUserStateChange } from '../../api/firebase';
+import { IUser, login, logout, onUserStateChange } from '../../api/firebase';
 
 export interface AuthContextType {
   user: IUser | null;
@@ -11,18 +11,15 @@ interface AuthContextProviderProps {
   children: React.ReactNode;
 }
 
-interface IUser {
-  displayName: string;
-  isAdmin: boolean;
-}
-
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
-    onUserStateChange(setUser);
+    onUserStateChange((updatedUser) => {
+      setUser(updatedUser);
+    });
   }, []);
 
   return (
