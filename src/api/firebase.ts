@@ -7,7 +7,8 @@ import {
   onAuthStateChanged,
   User,
 } from 'firebase/auth';
-import { getDatabase, ref, get } from 'firebase/database';
+import { getDatabase, ref, set, get } from 'firebase/database';
+import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -57,4 +58,28 @@ async function adminUser(user: User | null): Promise<IUser | null> {
   } else {
     return user as IUser;
   }
+}
+
+export interface ProductFormData {
+  image: FileList;
+  title: string;
+  price: string;
+  category: string;
+  description: string;
+  options: string;
+  option: string[];
+}
+
+export async function addNewProduct(
+  product: ProductFormData,
+  image: string | null
+) {
+  const id = uuid();
+  set(ref(database, `products/${id}`), {
+    ...product,
+    id,
+    price: parseInt(product.price),
+    image,
+    option: product.options.split(','),
+  });
 }

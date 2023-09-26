@@ -1,19 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { addNewProduct, ProductFormData } from '../api/firebase';
 import { uploadImage } from '../api/uploader';
-
-interface ProductFormData {
-  image: FileList;
-  title: string;
-  price: number;
-  category: string;
-  description: string;
-  options: string;
-}
 
 export default function NewProduct() {
   const { handleSubmit, register, watch, reset } = useForm<ProductFormData>();
-
   const [file, setFile] = useState<File | null>(null);
 
   const image = watch('image');
@@ -24,14 +15,20 @@ export default function NewProduct() {
     }
   }, [image]);
 
-  const onSubmit = () => {
+  const onSubmit = (product: ProductFormData) => {
     if (file) {
-      uploadImage(file).then((url) => {
-        console.log(url);
-      });
+      uploadImage(file)
+        .then((url) => {
+          return addNewProduct(product, url);
+        })
+        .then(() => {
+          reset();
+          setFile(null);
+        })
+        .catch((error) => {
+          console.error('제품 추가 오류:', error);
+        });
     }
-    reset();
-    setFile(null);
   };
 
   return (
