@@ -41,7 +41,7 @@ export default function NewProduct() {
   };
 
   return (
-    <div className='min-h-screen flex flex-col md:flex-row justify-center items-center gap-10 px-10 py-36'>
+    <div className='min-h-screen flex flex-col md:flex-row justify-center items-center gap-10 px-10 py-28'>
       {file && (
         <section className='w-80 md:w-96'>
           <img
@@ -88,21 +88,11 @@ export default function NewProduct() {
             {...register('category')}
             className='border border-solid border-black h-10 px-2 bg-transparent outline-none cursor-pointer'
           >
-            <option value='Outerwear' className=''>
-              Outerwear
-            </option>
-            <option value='Knitwear' className=''>
-              Knitwear
-            </option>
-            <option value='Tops' className=''>
-              Tops
-            </option>
-            <option value='Dresses' className=''>
-              Dresses
-            </option>
-            <option value='Accessories' className=''>
-              Accessories
-            </option>
+            <option value='Outerwear'>Outerwear</option>
+            <option value='Knitwear'>Knitwear</option>
+            <option value='Tops'>Tops</option>
+            <option value='Dresses'>Dresses</option>
+            <option value='Accessories'>Accessories</option>
           </select>
 
           <input

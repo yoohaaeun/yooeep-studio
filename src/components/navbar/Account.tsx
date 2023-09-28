@@ -45,12 +45,12 @@ export default function Account() {
             )}
             {!user && <motion.li onClick={login}>Login</motion.li>}
             {user && <motion.li>Wish List</motion.li>}
-            {user && <motion.li onClick={logout}>Logout</motion.li>}
             {user?.isAdmin && (
               <motion.li>
                 <Link to='/products/new'>제품 등록</Link>
               </motion.li>
             )}
+            {user && <motion.li onClick={logout}>Logout</motion.li>}
           </motion.ul>
         )}
       </AnimatePresence>

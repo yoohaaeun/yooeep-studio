@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function Logo() {
   return (
-    <Link to='/' className='w-60'>
+    <Link to='/' className='w-28 sm:w-40 md:w-60'>
       <img
         src='images/yooeep.png'
         alt=''
