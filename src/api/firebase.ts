@@ -67,7 +67,6 @@ export interface ProductFormData {
   category: string;
   description: string;
   options: string;
-  option: string[];
 }
 
 export async function addNewProduct(
@@ -75,11 +74,30 @@ export async function addNewProduct(
   image: string | null
 ) {
   const id = uuid();
-  set(ref(database, `products/${id}`), {
+  return set(ref(database, `products/${id}`), {
     ...product,
     id,
     price: parseInt(product.price),
     image,
-    option: product.options.split(','),
+    options: product.options.split(','),
+  });
+}
+
+export interface IProduct {
+  id: string;
+  category: string;
+  description: string;
+  image: string;
+  options: string[];
+  price: number;
+  title: string;
+}
+
+export async function getProducts(): Promise<IProduct[]> {
+  return get(ref(database, 'products')).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
   });
 }

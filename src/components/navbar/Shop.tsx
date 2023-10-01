@@ -33,7 +33,9 @@ export default function Shop() {
             exit='hidden'
             className='absolute py-5  text-xs leading-6 whitespace-nowrap cursor-pointer'
           >
-            <motion.li>New</motion.li>
+            <motion.li>
+              <Link to='/products'>New</Link>
+            </motion.li>
             <motion.li>Outerwear</motion.li>
             <motion.li>Knitwear</motion.li>
             <motion.li>Tops</motion.li>
