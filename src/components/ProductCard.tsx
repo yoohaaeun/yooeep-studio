@@ -1,4 +1,4 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IProduct } from '../api/firebase';
 import { formatNumberWithCommas } from '../utils';
 
@@ -7,10 +7,16 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { id, category, description, image, options, price, title } = product;
+  const { id, category, image, price, title } = product;
+  const navigate = useNavigate();
 
   return (
-    <li className='flex flex-col px-10 text-xs font-medium'>
+    <li
+      onClick={() => {
+        navigate(`/product/${id}`, { state: { product } });
+      }}
+      className='flex flex-col px-10 text-xs font-medium cursor-pointer'
+    >
       <img src={image} alt={title} />
       <div className='flex justify-between py-3 border-b border-black'>
         <h3 className='w-6/12 '>{title}</h3>
