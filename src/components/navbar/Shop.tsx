@@ -21,7 +21,7 @@ export default function Shop() {
       onMouseLeave={handleMouseLeave}
       className={`relative  ${
         location.pathname === '/' ? 'text-white' : 'text-black'
-      } hover:border-b transition-all duration-300 ease-in-out`}
+      } hover:border-b border-black transition-all duration-300 ease-in-out`}
     >
       Shop
       <AnimatePresence>
@@ -31,16 +31,26 @@ export default function Shop() {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            className='absolute py-5  text-xs leading-6 whitespace-nowrap cursor-pointer'
+            className='absolute py-5 text-xs leading-6 whitespace-nowrap cursor-pointer'
           >
             <motion.li>
-              <Link to='/products'>New</Link>
+              <Link to='/category/new'>New</Link>
             </motion.li>
-            <motion.li>Outerwear</motion.li>
-            <motion.li>Knitwear</motion.li>
-            <motion.li>Tops</motion.li>
-            <motion.li>Dresses</motion.li>
-            <motion.li>Accessories</motion.li>
+            <motion.li>
+              <Link to='/category/outer'>Outer</Link>
+            </motion.li>
+            <motion.li>
+              <Link to='/category/knitwear'>Knitwear</Link>
+            </motion.li>
+            <motion.li>
+              <Link to='/category/top'>Top</Link>
+            </motion.li>
+            <motion.li>
+              <Link to='/category/dresses'>Dresses</Link>
+            </motion.li>
+            <motion.li>
+              <Link to='/category/accessories'>Accessories</Link>
+            </motion.li>
           </motion.ul>
         )}
       </AnimatePresence>

@@ -88,9 +88,9 @@ export default function NewProduct() {
             {...register('category')}
             className='border border-solid border-black h-10 px-2 bg-transparent outline-none cursor-pointer'
           >
-            <option value='Outerwear'>Outerwear</option>
+            <option value='Outerwear'>Outer</option>
             <option value='Knitwear'>Knitwear</option>
-            <option value='Tops'>Tops</option>
+            <option value='Tops'>Top</option>
             <option value='Dresses'>Dresses</option>
             <option value='Accessories'>Accessories</option>
           </select>
