@@ -6,8 +6,8 @@ export default function Products() {
   const { data: products } = useQuery<IProduct[]>(['products'], getProducts);
 
   return (
-    <div className='bg-red-50'>
-      <ul className='grid grid-cols-3'>
+    <div className='w-full px-12 mb-20'>
+      <ul className='grid grid-cols-productColumns gap-14'>
         {products &&
           products.map((product) => (
             <ProductCard key={product.id} product={product} />

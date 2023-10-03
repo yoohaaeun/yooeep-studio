@@ -3,11 +3,11 @@ import Products from '../components/Products';
 
 export default function AllProducts() {
   return (
-    <div className='mx-auto my-40 max-w-screen-2xl bg-red-100'>
-      <div className='py-5 mb-20 border-b border-black '>
+    <section className='max-w-screen-xl mt-20 sm:mt-32 md:mt-40 mx-auto'>
+      <div className='w-full py-5 mb-20 border-b border-black '>
         <h2 className='font-medium text-lg text-center uppercase'>new</h2>
       </div>
       <Products />
-    </div>
+    </section>
   );
 }

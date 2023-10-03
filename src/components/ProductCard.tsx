@@ -9,8 +9,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { id, category, description, image, options, price, title } = product;
 
   return (
-    <li>
-      <img src={image} alt={title}></img>
+    <li className=' flex flex-col'>
+      <img className='' src={image} alt={title}></img>
       <div>
         <h3>{title}</h3>
         <p>₩{price}</p>
