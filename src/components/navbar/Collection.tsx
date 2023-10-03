@@ -7,7 +7,7 @@ export default function Collection() {
     <p
       className={`${
         location.pathname === '/' ? 'text-white' : 'text-black'
-      } hover:border-b transition-all duration-300 ease-in-out`}
+      } hover:border-b border-black transition-all duration-300 ease-in-out`}
     >
       Collection
     </p>
