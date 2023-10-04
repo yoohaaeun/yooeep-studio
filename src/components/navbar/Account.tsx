@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { dropdownVariants } from '../../utils';
 import { Link } from 'react-router-dom';
-import { useAuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../../context/AuthContext';
 
 export default function Account() {
   const authContext = useAuthContext();
