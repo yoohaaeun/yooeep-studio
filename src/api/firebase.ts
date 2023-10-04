@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   User,
 } from 'firebase/auth';
-import { getDatabase, ref, set, get } from 'firebase/database';
+import { getDatabase, ref, set, get, remove } from 'firebase/database';
 import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
@@ -85,19 +85,38 @@ export async function addNewProduct(
 
 export interface IProduct {
   id: string;
-  category: string;
-  description: string;
+  category?: string;
+  description?: string;
   image: string;
-  options: string[];
+  options?: string[];
   price: number;
   title: string;
+  option?: string | number;
+  quantity?: number;
 }
 
 export async function getProducts(): Promise<IProduct[]> {
-  return get(ref(database, 'products')).then((snapshot) => {
-    if (snapshot.exists()) {
-      return Object.values(snapshot.val());
-    }
-    return [];
-  });
+  return get(ref(database, 'products')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return Object.values(snapshot.val());
+      }
+      return [];
+    });
+}
+
+export async function getCart(userId: string) {
+  return get(ref(database, `carts/${userId}`)) //
+    .then((snapshot) => {
+      const items = snapshot.val() || {};
+      return Object.values(items);
+    });
+}
+
+export async function addOrUpdateToCart(userId: string, product: IProduct) {
+  return set(ref(database, `carts/${userId}/${product.id}`), product);
+}
+
+export async function removeFromCart(userId: string, product: IProduct) {
+  return remove(ref(database, `carts/${userId}/${product.id}`));
 }

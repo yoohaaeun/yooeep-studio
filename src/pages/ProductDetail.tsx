@@ -1,21 +1,38 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { addOrUpdateToCart, IProduct } from '../api/firebase';
+import { useAuthContext } from '../context/AuthContext';
 import { formatNumberWithCommas } from '../utils';
 
 export default function ProductDetail() {
+  const authContext = useAuthContext();
+  const uid = authContext?.uid || '';
+
   const {
     state: {
       product: { id, image, title, description, category, price, options },
     },
   } = useLocation();
+
   const [selected, setSelected] = useState<string>(DEFAULT_OPTION);
+
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) =>
     setSelected(e.target.value);
+
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (selected === DEFAULT_OPTION) {
+    if (selected === null || selected === DEFAULT_OPTION) {
       alert('필수 옵션을 선택해주세요.');
     } else {
       alert('장바구니 추가 완료!');
+      const product: IProduct = {
+        id,
+        image,
+        title,
+        price,
+        option: selected,
+        quantity: 1,
+      };
+      addOrUpdateToCart(uid, product);
     }
   };
 
