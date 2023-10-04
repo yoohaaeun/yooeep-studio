@@ -1,27 +1,46 @@
-import { IProduct } from '../api/firebase';
+import { addOrUpdateToCart, IProduct, removeFromCart } from '../api/firebase';
+import { formatNumberWithCommas } from '../utils';
 
 interface CartItemProps {
   product: IProduct;
+  uid: string;
 }
 
-export default function CartItem({ product }: CartItemProps) {
+export default function CartItem({ product, uid }: CartItemProps) {
+  const { id, image, title, option, quantity, price } = product;
+
+  const handleMinus = () => {
+    if (quantity < 2) return;
+    addOrUpdateToCart(uid, { ...product, quantity: quantity - 1 });
+  };
+
+  const handlePlus = () => {
+    addOrUpdateToCart(uid, { ...product, quantity: quantity + 1 });
+  };
+
   return (
-    <li className='flex flex-row border-t border-black py-3 mb-2'>
-      <img className='w-20 mr-3' src={product.image} alt={product.title} />
+    <li className='flex flex-row border-t border-black py-4 mb-2'>
+      <img className='w-24 mr-3' src={image} alt={title} />
       <div className='w-full flex flex-row items-start justify-between'>
         <div>
           <p className='mb-0.5'>{product.title}</p>
           <p className='mb-2'>
-            [옵션 : <span>32</span>]
+            [옵션 : <span>{product.option}</span>]
           </p>
           <p className='mb-2'>
-            KRW <span>185,000</span>
+            KRW <span>{formatNumberWithCommas(price)}</span>
           </p>
           <p className='mb-2'>-</p>
           <div className='flex flex-row'>
-            <div className='w-7 mr-2 pl-1 pb-1 border-b border-gray-500'>1</div>
-            <button className='mr-3 text-gray-500'>+</button>
-            <button className='text-gray-500'>-</button>
+            <div className='w-7 mr-2 pl-1 pb-1 border-b border-gray-500'>
+              {quantity}
+            </div>
+            <button onClick={handlePlus} className='w-5 mr-2 text-gray-500'>
+              +
+            </button>
+            <button onClick={handleMinus} className='w-5 text-gray-500'>
+              -
+            </button>
           </div>
         </div>
         <input type='checkbox' />

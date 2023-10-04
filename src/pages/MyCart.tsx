@@ -4,6 +4,7 @@ import { useAuthContext } from '../context/AuthContext';
 import CartStatus from '../components/CartStatus';
 import CartItem from '../components/CartItem';
 import EmptyCart from '../components/EmptyCart';
+import { formatNumberWithCommas } from '../utils';
 
 export default function MyCart() {
   const authContext = useAuthContext();
@@ -11,15 +12,23 @@ export default function MyCart() {
 
   const { isLoading, data: products } = useQuery<any, Error, IProduct[]>(
     ['carts'],
-    () => getCart(uid)
+    () => getCart(uid),
+    { enabled: !!uid }
   );
 
   if (isLoading) return <p>Loading...</p>;
 
   const hasProducts = products && products.length > 0;
 
+  const totalPrice =
+    products &&
+    products.reduce(
+      (prev, current) => prev + current.price * current.quantity,
+      0
+    );
+
   return (
-    <section className='max-w-screen-xl min-h-screen mt-20 sm:mt-32 md:mt-40 mx-auto px-6 sm:px-10'>
+    <section className='max-w-screen-xl min-h-screen mt-20 sm:mt-32 md:mt-40 mx-auto mb-20 sm:mb-14 px-6 sm:px-10'>
       <div className='w-full py-5 mb-11 md:mb-20 border-b border-black'>
         <h2 className='font-medium text-lg text-center uppercase'>
           BAG {hasProducts && <CartStatus />}
@@ -29,23 +38,36 @@ export default function MyCart() {
       {!hasProducts && <EmptyCart />}
 
       {hasProducts && (
-        <div className='px-3 py-5 md:p-9 lg:p-12 border border-black bg-white '>
+        <div className='px-3 py-6 md:p-9 lg:p-12 border border-black bg-white '>
           <ul className='text-xs sm:text-sm'>
             {products &&
-              products.map((product) => (
-                <CartItem key={product.id} product={product} />
-              ))}
+              products.map((product) => {
+                console.log('KEY', product.id);
+                return (
+                  <CartItem key={product.id} product={product} uid={uid} />
+                );
+              })}
           </ul>
 
           <div className='border-t py-6 border-black flex flex-row justify-between text-xs sm:text-sm'>
             <p>[기본배송]</p>
             <div className='text-end'>
               <p>
-                상품구매금액 <span className='font-bold'>209,000</span> + 배송비
-                <span className='font-bold'>0 (무료)</span> =
+                상품구매금액
+                <span className='font-bold'>
+                  {formatNumberWithCommas(totalPrice!)}
+                </span>
+                + 배송비
+                <span className='font-bold'>
+                  {formatNumberWithCommas(0)} (무료)
+                </span>
+                =
               </p>
               <p className='mb-6 sm:mb-7'>
-                합계 : KRW <span className='font-bold'>209,000</span>
+                합계 : KRW
+                <span className='font-bold'>
+                  {formatNumberWithCommas(totalPrice!)}
+                </span>
               </p>
               <div>
                 <button className='border border-black py-0.5 px-2.5 mr-1'>
@@ -62,21 +84,28 @@ export default function MyCart() {
             <div className='flex flex-row justify-between mb-3'>
               <p>총 상품금액</p>
               <p>
-                KRW <span className='font-bold'>209,000</span>
+                KRW
+                <span className='font-bold'>
+                  {formatNumberWithCommas(totalPrice!)}
+                </span>
               </p>
             </div>
 
             <div className='flex flex-row justify-between  mb-3'>
               <p>총 배송비</p>
               <p>
-                KRW <span className='font-bold'>0</span>
+                KRW
+                <span className='font-bold'>{formatNumberWithCommas(0)}</span>
               </p>
             </div>
 
             <div className='flex flex-row justify-between'>
               <p>결제예정금액</p>
               <p>
-                KRW <span className='font-bold'>209,000</span>
+                KRW
+                <span className='font-bold'>
+                  {formatNumberWithCommas(totalPrice!)}
+                </span>
               </p>
             </div>
           </div>

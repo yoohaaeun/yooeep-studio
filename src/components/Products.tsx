@@ -7,8 +7,6 @@ interface ProdcurtsProps {
 }
 
 export default function Products({ category }: ProdcurtsProps) {
-  console.log(category);
-
   const { data: products } = useQuery<IProduct[]>(['products'], getProducts);
 
   const formattedCategory =

@@ -92,7 +92,7 @@ export interface IProduct {
   price: number;
   title: string;
   option?: string | number;
-  quantity?: number;
+  quantity: number;
 }
 
 export async function getProducts(): Promise<IProduct[]> {
@@ -106,6 +106,7 @@ export async function getProducts(): Promise<IProduct[]> {
 }
 
 export async function getCart(userId: string) {
+  console.log('userId', userId);
   return get(ref(database, `carts/${userId}`)) //
     .then((snapshot) => {
       const items = snapshot.val() || {};
