@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import CartStatus from '../CartStatus';
 
 export default function Bag() {
   const location = useLocation();
@@ -11,6 +12,7 @@ export default function Bag() {
       } hover:border-b border-black transition-all duration-300 ease-in-out`}
     >
       Bag
+      <CartStatus />
     </Link>
   );
 }
