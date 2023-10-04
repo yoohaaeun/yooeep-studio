@@ -37,7 +37,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <section className='max-w-screen-xl  grid grid-cols-1 md:grid-cols-2 gap-8 mt-20 sm:mt-32 md:mt-40 mb-20 mx-auto px-16'>
+    <section className='max-w-screen-xl min-h-screen grid grid-cols-1 md:grid-cols-2 gap-8 mt-20 sm:mt-32 md:mt-40 mb-20 mx-auto px-16'>
       <img className='w-full' src={image} alt={title} />
       <div>
         <h3 className='font-medium pb-1'>{title}</h3>

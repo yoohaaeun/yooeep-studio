@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 
-interface IProtectedRoute {
+interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAdmin?: boolean;
 }
@@ -10,7 +10,7 @@ interface IProtectedRoute {
 export default function ProtectedRoute({
   children,
   requireAdmin,
-}: IProtectedRoute) {
+}: ProtectedRouteProps) {
   const authContext = useAuthContext();
 
   const { user } = authContext || {};

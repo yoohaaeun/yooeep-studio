@@ -8,7 +8,7 @@ export default function AllProducts() {
 
   return (
     <section className='max-w-screen-xl mt-20 sm:mt-32 md:mt-40 mx-auto px-10'>
-      <Products lastPartOfPath={lastPartOfPath} />
+      <Products category={lastPartOfPath || ''} />
     </section>
   );
 }
