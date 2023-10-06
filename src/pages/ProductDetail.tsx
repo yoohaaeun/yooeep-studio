@@ -1,10 +1,13 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { IProduct } from '../api/firebase';
+import { useAuthContext } from '../context/AuthContext';
 import useCart from '../hooks/useCart';
 import { formatNumberWithCommas } from '../utils';
 
 export default function ProductDetail() {
+  const authContext = useAuthContext();
+  const { user, login } = authContext || {};
   const { addOrUpdateItem } = useCart();
   const {
     state: {
@@ -60,12 +63,21 @@ export default function ProductDetail() {
               ))}
           </select>
         </div>
-        <button
-          onClick={handleClick}
-          className='w-full h-11 border border-black text-sm uppercase hover:bg-white transition duration-300'
-        >
-          add to cart
-        </button>
+        {user ? (
+          <button
+            onClick={handleClick}
+            className='w-full h-11 border border-black text-sm uppercase hover:bg-white transition duration-300'
+          >
+            add to cart
+          </button>
+        ) : (
+          <button
+            onClick={login}
+            className='w-full h-11 border border-black text-sm uppercase hover:bg-white transition duration-300'
+          >
+            Please Login to add the product in to cart
+          </button>
+        )}
       </div>
     </section>
   );
