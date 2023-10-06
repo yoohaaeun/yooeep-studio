@@ -1,5 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
-import { getProducts, IProduct } from '../api/firebase';
+import useProducts from '../hooks/useProducts';
 import ProductCard from './ProductCard';
 
 interface ProdcurtsProps {
@@ -7,7 +6,9 @@ interface ProdcurtsProps {
 }
 
 export default function Products({ category }: ProdcurtsProps) {
-  const { data: products } = useQuery<IProduct[]>(['products'], getProducts);
+  const {
+    productsQuery: { data: products },
+  } = useProducts();
 
   const formattedCategory =
     category.charAt(0).toUpperCase() + category.slice(1);
