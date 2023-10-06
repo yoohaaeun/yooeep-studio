@@ -1,4 +1,4 @@
-export async function uploadImage(file: File): Promise<string | null> {
+export async function uploadImage(file: File): Promise<string> {
   const data = new FormData();
   data.append('file', file);
   data.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET || '');

@@ -1,15 +1,15 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { addNewProduct, ProductFormData } from '../api/firebase';
+import { ProductFormData } from '../api/firebase';
 import { uploadImage } from '../api/uploader';
+import useProducts from '../hooks/useProducts';
 
 export default function NewProduct() {
   const { handleSubmit, register, watch, reset } = useForm<ProductFormData>();
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
-  const queryClient = useQueryClient();
+  const { addProduct } = useProducts();
 
   const image = watch('image');
   useEffect(() => {
@@ -19,29 +19,31 @@ export default function NewProduct() {
     }
   }, [image]);
 
-  const addProduct = useMutation<void, Error, ProductFormData>(
-    (product: ProductFormData) =>
-      uploadImage(file!).then((url) => addNewProduct(product, url)),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-        setSuccess('🧚🏻‍♀️ 제품이 등록 되었습니다');
-        setTimeout(() => {
-          setSuccess(null);
-        }, 4000);
-        reset();
-        setFile(null);
-        setIsUploading(false);
-      },
-      onError: (error) => {
-        console.error('제품 추가 오류:', error);
-      },
-    }
-  );
-
   const onSubmit = (product: ProductFormData) => {
     setIsUploading(true);
-    addProduct.mutate(product);
+    if (file) {
+      uploadImage(file)
+        .then((url) => {
+          if (url !== null) {
+            addProduct.mutate(
+              { product, url },
+              {
+                onSuccess: () => {
+                  setSuccess('🧚🏻‍♀️ 제품이 등록 되었습니다');
+                  setTimeout(() => {
+                    setSuccess(null);
+                  }, 4000);
+                  reset();
+                  setFile(null);
+                },
+              }
+            );
+          }
+        })
+        .finally(() => {
+          setIsUploading(false);
+        });
+    }
   };
 
   return (
