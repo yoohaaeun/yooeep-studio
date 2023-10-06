@@ -4,9 +4,16 @@ import { formatNumberWithCommas } from '../utils';
 interface CartItemProps {
   product: IProduct;
   uid: string;
+  selectedProducts: string[];
+  handleProductSelect: (productId: string) => void;
 }
 
-export default function CartItem({ product, uid }: CartItemProps) {
+export default function CartItem({
+  product,
+  uid,
+  selectedProducts,
+  handleProductSelect,
+}: CartItemProps) {
   const { id, image, title, option, quantity, price } = product;
 
   const handleMinus = () => {
@@ -17,6 +24,8 @@ export default function CartItem({ product, uid }: CartItemProps) {
   const handlePlus = () => {
     addOrUpdateToCart(uid, { ...product, quantity: quantity + 1 });
   };
+
+  const isSelected = selectedProducts.includes(id);
 
   return (
     <li className='flex flex-row border-t border-black py-4 mb-2'>
@@ -43,7 +52,11 @@ export default function CartItem({ product, uid }: CartItemProps) {
             </button>
           </div>
         </div>
-        <input type='checkbox' />
+        <input
+          type='checkbox'
+          onChange={() => handleProductSelect(id)}
+          checked={isSelected}
+        />
       </div>
     </li>
   );

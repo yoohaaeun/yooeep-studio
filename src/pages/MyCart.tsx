@@ -1,14 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCart, IProduct } from '../api/firebase';
+import { getCart, IProduct, removeFromCart } from '../api/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import CartStatus from '../components/CartStatus';
 import CartItem from '../components/CartItem';
 import EmptyCart from '../components/EmptyCart';
 import { formatNumberWithCommas } from '../utils';
+import { useState } from 'react';
 
 export default function MyCart() {
   const authContext = useAuthContext();
   const uid = authContext?.uid || '';
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
 
   const { isLoading, data: products } = useQuery<any, Error, IProduct[]>(
     ['carts'],
@@ -27,6 +29,23 @@ export default function MyCart() {
       0
     );
 
+  const handleProductSelect = (productId: string) => {
+    if (selectedProducts.includes(productId)) {
+      setSelectedProducts((prevSelected) =>
+        prevSelected.filter((id) => id !== productId)
+      );
+    } else {
+      setSelectedProducts((prevSelected) => [...prevSelected, productId]);
+    }
+  };
+
+  const handleDeleteSelectedProducts = () => {
+    selectedProducts.forEach((productId) => {
+      removeFromCart(uid, productId);
+    });
+    setSelectedProducts([]);
+  };
+
   return (
     <section className='max-w-screen-xl min-h-screen mt-20 sm:mt-32 md:mt-40 mx-auto mb-20 sm:mb-14 px-6 sm:px-10'>
       <div className='w-full py-5 mb-11 md:mb-20 border-b border-black'>
@@ -42,9 +61,14 @@ export default function MyCart() {
           <ul className='text-xs sm:text-sm'>
             {products &&
               products.map((product) => {
-                console.log('KEY', product.id);
                 return (
-                  <CartItem key={product.id} product={product} uid={uid} />
+                  <CartItem
+                    key={product.id}
+                    product={product}
+                    uid={uid}
+                    handleProductSelect={handleProductSelect}
+                    selectedProducts={selectedProducts}
+                  />
                 );
               })}
           </ul>
@@ -70,10 +94,13 @@ export default function MyCart() {
                 </span>
               </p>
               <div>
-                <button className='border border-black py-0.5 px-2.5 mr-1'>
+                {/* <button className='border border-black py-0.5 px-2.5 mr-1'>
                   전체선택
-                </button>
-                <button className='border border-black py-0.5 px-2.5'>
+                </button> */}
+                <button
+                  onClick={handleDeleteSelectedProducts}
+                  className='border border-black py-0.5 px-2.5'
+                >
                   삭제하기
                 </button>
               </div>

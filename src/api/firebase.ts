@@ -106,7 +106,6 @@ export async function getProducts(): Promise<IProduct[]> {
 }
 
 export async function getCart(userId: string) {
-  console.log('userId', userId);
   return get(ref(database, `carts/${userId}`)) //
     .then((snapshot) => {
       const items = snapshot.val() || {};
@@ -118,6 +117,6 @@ export async function addOrUpdateToCart(userId: string, product: IProduct) {
   return set(ref(database, `carts/${userId}/${product.id}`), product);
 }
 
-export async function removeFromCart(userId: string, product: IProduct) {
-  return remove(ref(database, `carts/${userId}/${product.id}`));
+export async function removeFromCart(userId: string, productId: string) {
+  return remove(ref(database, `carts/${userId}/${productId}`));
 }
