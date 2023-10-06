@@ -19,9 +19,11 @@ export default function Shop() {
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative  ${
-        location.pathname === '/' ? 'text-white' : 'text-black'
-      } hover:border-b border-black transition-all duration-300 ease-in-out`}
+      className={`${
+        location.pathname === '/'
+          ? 'text-white border-white'
+          : 'text-black border-black'
+      } hover:border-b  transition-all duration-300 ease-in-out`}
     >
       Shop
       <AnimatePresence>
@@ -47,6 +49,9 @@ export default function Shop() {
             </motion.li>
             <motion.li>
               <Link to='/category/dresses'>Dresses</Link>
+            </motion.li>
+            <motion.li>
+              <Link to='/category/Shoes'>Shoes</Link>
             </motion.li>
             <motion.li>
               <Link to='/category/accessories'>Accessories</Link>

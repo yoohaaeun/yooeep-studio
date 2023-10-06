@@ -5,10 +5,10 @@ export default function Home() {
     <>
       <img
         src='/images/main.jpg'
-        alt=''
+        alt='Yooeep Studio Logo'
         className='w-screen h-screen object-cover object-center'
       />
-      <div className='h-60 bg-main' />
+      <div className='h-60' />
     </>
   );
 }

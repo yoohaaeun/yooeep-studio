@@ -25,7 +25,7 @@ export default function Products({ category }: ProdcurtsProps) {
         </h2>
       </div>
       <div className='mb-20'>
-        <ul className='grid grid-cols-productColumns gap-y-10'>
+        <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10'>
           {category === 'new'
             ? products &&
               products.map((product) => (

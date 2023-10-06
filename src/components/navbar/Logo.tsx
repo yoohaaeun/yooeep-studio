@@ -5,7 +5,7 @@ export default function Logo() {
     <Link to='/' className='w-28 sm:w-40 md:w-60'>
       <img
         src='images/yooeep.png'
-        alt=''
+        alt='Yooeep Studio Logo'
         className='w-full relative bottom-3'
       />
     </Link>

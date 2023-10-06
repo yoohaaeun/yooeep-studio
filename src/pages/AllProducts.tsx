@@ -7,7 +7,7 @@ export default function AllProducts() {
   const lastPartOfPath = location.pathname.split('/').pop();
 
   return (
-    <section className='max-w-screen-xl mt-20 sm:mt-32 md:mt-40 mx-auto px-10'>
+    <section className='max-w-screen-xl min-h-screen mt-20 sm:mt-32 md:mt-40 mx-auto px-10'>
       <Products category={lastPartOfPath || ''} />
     </section>
   );

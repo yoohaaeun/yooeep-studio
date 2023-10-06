@@ -8,8 +8,10 @@ export default function Bag() {
     <Link
       to='/carts'
       className={`${
-        location.pathname === '/' ? 'text-white' : 'text-black'
-      } hover:border-b border-black transition-all duration-300 ease-in-out`}
+        location.pathname === '/'
+          ? 'text-white border-white'
+          : 'text-black border-black'
+      } hover:border-b  transition-all duration-300 ease-in-out`}
     >
       Bag
       <CartStatus />

@@ -96,8 +96,9 @@ export default function NewProduct() {
           >
             <option value='Outer'>Outer</option>
             <option value='Knitwear'>Knitwear</option>
-            <option value='Tops'>Top</option>
+            <option value='Top'>Top</option>
             <option value='Dresses'>Dresses</option>
+            <option value='Shoes'>Shoes</option>
             <option value='Accessories'>Accessories</option>
           </select>
 
