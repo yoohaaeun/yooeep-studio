@@ -4,7 +4,6 @@ import { formatNumberWithCommas } from '../utils';
 
 interface CartItemProps {
   product: IProduct;
-  uid: string;
   selectedProducts: string[];
   handleProductSelect: (productId: string) => void;
 }
@@ -15,15 +14,15 @@ export default function CartItem({
   handleProductSelect,
 }: CartItemProps) {
   const { id, image, title, option, quantity, price } = product;
-  const { addOrUpdateItem } = useCart();
+  const { addOrUpdateCartItem } = useCart();
 
   const handleMinus = () => {
     if (quantity < 2) return;
-    addOrUpdateItem.mutate({ ...product, quantity: quantity - 1 });
+    addOrUpdateCartItem.mutate({ ...product, quantity: quantity - 1 });
   };
 
   const handlePlus = () => {
-    addOrUpdateItem.mutate({ ...product, quantity: quantity + 1 });
+    addOrUpdateCartItem.mutate({ ...product, quantity: quantity + 1 });
   };
 
   const isSelected = selectedProducts.includes(id);
@@ -31,7 +30,7 @@ export default function CartItem({
   return (
     <li className='flex flex-row border-t border-black py-4 mb-2'>
       <img className='w-24 mr-3' src={image} alt={title} />
-      <div className='w-full flex flex-row items-start justify-between'>
+      <div className='w-full flex items-start justify-between'>
         <div>
           <p className='mb-0.5'>{title}</p>
           <p className='mb-2'>

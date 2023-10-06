@@ -10,6 +10,7 @@ import ProductDetail from './pages/ProductDetail';
 import NewProduct from './pages/NewProduct';
 import ProtectedRoute from './pages/ProtectedRoute';
 import MyCart from './pages/MyCart';
+import MyWishList from './pages/MyWishList';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: '/category/knitwear', element: <AllProducts /> },
       { path: '/category/top', element: <AllProducts /> },
       { path: '/category/dresses', element: <AllProducts /> },
+      { path: '/category/shoes', element: <AllProducts /> },
       { path: '/category/accessories', element: <AllProducts /> },
       {
         path: '/product/:id',
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <MyCart />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/wish_list',
+        element: (
+          <ProtectedRoute>
+            <MyWishList />
           </ProtectedRoute>
         ),
       },

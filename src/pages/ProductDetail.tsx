@@ -3,12 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { IProduct } from '../api/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import useCart from '../hooks/useCart';
+import useWishList from '../hooks/useWishList';
 import { formatNumberWithCommas } from '../utils';
 
 export default function ProductDetail() {
   const authContext = useAuthContext();
   const { user, login } = authContext || {};
-  const { addOrUpdateItem } = useCart();
+  const { addOrUpdateCartItem } = useCart();
+  const { addWishItem } = useWishList();
   const {
     state: {
       product: { id, image, title, description, category, price, options },
@@ -19,11 +21,11 @@ export default function ProductDetail() {
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) =>
     setSelected(e.target.value);
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const addToCart = () => {
     if (selected === null || selected === DEFAULT_OPTION) {
       alert('필수 옵션을 선택해주세요.');
     } else {
-      alert('장바구니 추가 완료!');
+      alert('장바구니에 상품이 담겼습니다.');
       const product: IProduct = {
         id,
         image,
@@ -32,8 +34,21 @@ export default function ProductDetail() {
         option: selected,
         quantity: 1,
       };
-      addOrUpdateItem.mutate(product);
+      addOrUpdateCartItem.mutate(product);
     }
+  };
+
+  const addToWishList = (e: MouseEvent<HTMLButtonElement>) => {
+    alert('관심상품으로 등록되었습니다.');
+    const product: IProduct = {
+      id,
+      image,
+      title,
+      price,
+      option: selected,
+      quantity: 1,
+    };
+    addWishItem.mutate(product);
   };
 
   return (
@@ -64,12 +79,20 @@ export default function ProductDetail() {
           </select>
         </div>
         {user ? (
-          <button
-            onClick={handleClick}
-            className='w-full h-11 border border-black text-sm uppercase hover:bg-white transition duration-300'
-          >
-            add to cart
-          </button>
+          <div className='flex gap-1'>
+            <button
+              onClick={addToCart}
+              className='w-full h-11 border border-black text-sm uppercase hover:bg-white transition duration-300'
+            >
+              add to cart
+            </button>
+            <button
+              onClick={addToWishList}
+              className='h-11 px-3 border border-black hover:bg-white transition duration-300'
+            >
+              🤍
+            </button>
+          </div>
         ) : (
           <button
             onClick={login}

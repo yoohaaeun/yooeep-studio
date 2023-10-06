@@ -25,8 +25,10 @@ export default function Account() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`${
-        location.pathname === '/' ? 'text-white' : 'text-black'
-      } hover:border-b border-black transition-all duration-300 ease-in-out`}
+        location.pathname === '/'
+          ? 'text-white border-white'
+          : 'text-black border-black'
+      } hover:border-b  transition-all duration-300 ease-in-out`}
     >
       Account
       <AnimatePresence>
@@ -44,7 +46,11 @@ export default function Account() {
               </motion.li>
             )}
             {!user && <motion.li onClick={login}>Login</motion.li>}
-            {user && <motion.li>Wish List</motion.li>}
+            {user && (
+              <motion.li>
+                <Link to='/wish_list'>Wish List</Link>
+              </motion.li>
+            )}
             {user?.isAdmin && (
               <motion.li>
                 <Link to='/products/new'>제품 등록</Link>

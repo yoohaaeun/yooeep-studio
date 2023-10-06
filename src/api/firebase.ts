@@ -120,3 +120,19 @@ export async function addOrUpdateToCart(userId: string, product: IProduct) {
 export async function removeFromCart(userId: string, productId: string) {
   return remove(ref(database, `carts/${userId}/${productId}`));
 }
+
+export async function getWishList(userId: string) {
+  return get(ref(database, `wish-list/${userId}`)) //
+    .then((snapshot) => {
+      const items = snapshot.val() || {};
+      return Object.values(items);
+    });
+}
+
+export async function addToWishList(userId: string, product: IProduct) {
+  return set(ref(database, `wish-list/${userId}/${product.id}`), product);
+}
+
+export async function removeFromWishList(userId: string, productId: string) {
+  return remove(ref(database, `wish-list/${userId}/${productId}`));
+}

@@ -1,4 +1,3 @@
-import { useAuthContext } from '../context/AuthContext';
 import CartStatus from '../components/CartStatus';
 import CartItem from '../components/CartItem';
 import EmptyCart from '../components/EmptyCart';
@@ -7,10 +6,8 @@ import { useState } from 'react';
 import useCart from '../hooks/useCart';
 
 export default function MyCart() {
-  const authContext = useAuthContext();
-  const uid = authContext?.uid || '';
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const { removeItem } = useCart();
+  const { removeCartItem } = useCart();
 
   const {
     cartQuery: { isLoading, data: products },
@@ -39,7 +36,7 @@ export default function MyCart() {
 
   const handleDeleteSelectedProducts = () => {
     selectedProducts.forEach((productId) => {
-      removeItem.mutate(productId);
+      removeCartItem.mutate(productId);
     });
     setSelectedProducts([]);
   };
@@ -63,7 +60,6 @@ export default function MyCart() {
                   <CartItem
                     key={product.id}
                     product={product}
-                    uid={uid}
                     handleProductSelect={handleProductSelect}
                     selectedProducts={selectedProducts}
                   />
@@ -92,9 +88,6 @@ export default function MyCart() {
                 </span>
               </p>
               <div>
-                {/* <button className='border border-black py-0.5 px-2.5 mr-1'>
-                  전체선택
-                </button> */}
                 <button
                   onClick={handleDeleteSelectedProducts}
                   className='border border-black py-0.5 px-2.5'

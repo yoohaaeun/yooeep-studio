@@ -18,7 +18,7 @@ export default function useCart() {
     { enabled: !!uid }
   );
 
-  const addOrUpdateItem = useMutation<void, Error, IProduct>(
+  const addOrUpdateCartItem = useMutation<void, Error, IProduct>(
     (product) => addOrUpdateToCart(uid, product),
     {
       onSuccess: () => {
@@ -27,7 +27,7 @@ export default function useCart() {
     }
   );
 
-  const removeItem = useMutation<void, Error, string>(
+  const removeCartItem = useMutation<void, Error, string>(
     (id) => removeFromCart(uid, id),
     {
       onSuccess: () => {
@@ -36,5 +36,5 @@ export default function useCart() {
     }
   );
 
-  return { cartQuery, addOrUpdateItem, removeItem };
+  return { cartQuery, addOrUpdateCartItem, removeCartItem };
 }
