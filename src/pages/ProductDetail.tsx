@@ -1,19 +1,16 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { addOrUpdateToCart, IProduct } from '../api/firebase';
-import { useAuthContext } from '../context/AuthContext';
+import { IProduct } from '../api/firebase';
+import useCart from '../hooks/useCart';
 import { formatNumberWithCommas } from '../utils';
 
 export default function ProductDetail() {
-  const authContext = useAuthContext();
-  const uid = authContext?.uid || '';
-
+  const { addOrUpdateItem } = useCart();
   const {
     state: {
       product: { id, image, title, description, category, price, options },
     },
   } = useLocation();
-
   const [selected, setSelected] = useState<string>(DEFAULT_OPTION);
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) =>
@@ -32,7 +29,7 @@ export default function ProductDetail() {
         option: selected,
         quantity: 1,
       };
-      addOrUpdateToCart(uid, product);
+      addOrUpdateItem.mutate(product);
     }
   };
 

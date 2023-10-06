@@ -1,22 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
-import { getCart, IProduct, removeFromCart } from '../api/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import CartStatus from '../components/CartStatus';
 import CartItem from '../components/CartItem';
 import EmptyCart from '../components/EmptyCart';
 import { formatNumberWithCommas } from '../utils';
 import { useState } from 'react';
+import useCart from '../hooks/useCart';
 
 export default function MyCart() {
   const authContext = useAuthContext();
   const uid = authContext?.uid || '';
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const { removeItem } = useCart();
 
-  const { isLoading, data: products } = useQuery<any, Error, IProduct[]>(
-    ['carts'],
-    () => getCart(uid),
-    { enabled: !!uid }
-  );
+  const {
+    cartQuery: { isLoading, data: products },
+  } = useCart();
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -41,7 +39,7 @@ export default function MyCart() {
 
   const handleDeleteSelectedProducts = () => {
     selectedProducts.forEach((productId) => {
-      removeFromCart(uid, productId);
+      removeItem.mutate(productId);
     });
     setSelectedProducts([]);
   };

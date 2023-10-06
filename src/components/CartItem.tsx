@@ -1,4 +1,5 @@
-import { addOrUpdateToCart, IProduct, removeFromCart } from '../api/firebase';
+import { IProduct } from '../api/firebase';
+import useCart from '../hooks/useCart';
 import { formatNumberWithCommas } from '../utils';
 
 interface CartItemProps {
@@ -10,19 +11,19 @@ interface CartItemProps {
 
 export default function CartItem({
   product,
-  uid,
   selectedProducts,
   handleProductSelect,
 }: CartItemProps) {
   const { id, image, title, option, quantity, price } = product;
+  const { addOrUpdateItem } = useCart();
 
   const handleMinus = () => {
     if (quantity < 2) return;
-    addOrUpdateToCart(uid, { ...product, quantity: quantity - 1 });
+    addOrUpdateItem.mutate({ ...product, quantity: quantity - 1 });
   };
 
   const handlePlus = () => {
-    addOrUpdateToCart(uid, { ...product, quantity: quantity + 1 });
+    addOrUpdateItem.mutate({ ...product, quantity: quantity + 1 });
   };
 
   const isSelected = selectedProducts.includes(id);
@@ -32,9 +33,9 @@ export default function CartItem({
       <img className='w-24 mr-3' src={image} alt={title} />
       <div className='w-full flex flex-row items-start justify-between'>
         <div>
-          <p className='mb-0.5'>{product.title}</p>
+          <p className='mb-0.5'>{title}</p>
           <p className='mb-2'>
-            [옵션 : <span>{product.option}</span>]
+            [옵션 : <span>{option}</span>]
           </p>
           <p className='mb-2'>
             KRW <span>{formatNumberWithCommas(price)}</span>
