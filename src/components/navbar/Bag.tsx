@@ -7,7 +7,7 @@ export default function Bag() {
   return (
     <Link
       to='/carts'
-      className={`${
+      className={`h-fit justify-self-end ${
         location.pathname === '/'
           ? 'text-white border-white'
           : 'text-black border-black'

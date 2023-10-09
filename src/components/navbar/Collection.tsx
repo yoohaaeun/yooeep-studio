@@ -5,7 +5,7 @@ export default function Collection() {
 
   return (
     <p
-      className={`${
+      className={`h-fit justify-self-start ${
         location.pathname === '/'
           ? 'text-white border-white'
           : 'text-black border-black'

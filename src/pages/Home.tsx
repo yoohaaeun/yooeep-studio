@@ -8,6 +8,11 @@ export default function Home() {
         alt='Yooeep Studio Logo'
         className='w-screen h-screen object-cover object-center'
       />
+      <img
+        src='/images/main-shoes.jpg'
+        alt='Yooeep Studio Logo'
+        className='w-screen h-screen object-cover object-center'
+      />
       <div className='h-60' />
     </>
   );

@@ -24,7 +24,7 @@ export default function Account() {
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`${
+      className={`h-fit justify-self-end ${
         location.pathname === '/'
           ? 'text-white border-white'
           : 'text-black border-black'
