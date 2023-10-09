@@ -11,7 +11,7 @@ export default function ProductDetail() {
   const authContext = useAuthContext();
   const { user, login } = authContext || {};
   const { addOrUpdateCartItem } = useCart();
-  const { addWishItem } = useWishList();
+  const { isInWishList, addWishItem, removeWishItem } = useWishList();
   const {
     state: {
       product: { id, image, title, description, category, price, options },
@@ -39,17 +39,22 @@ export default function ProductDetail() {
   };
 
   const addToWishList = () => {
-    alert('관심상품으로 등록되었습니다.');
-    const product: IProduct = {
-      id,
-      image,
-      title,
-      price,
-      option: selected,
-      quantity: 1,
-      options,
-    };
-    addWishItem.mutate(product);
+    if (isInWishList(id)) {
+      alert('관심상품 등록이 취소되었습니다.');
+      removeWishItem.mutate(id);
+    } else {
+      alert('관심상품으로 등록되었습니다.');
+      const product: IProduct = {
+        id,
+        image,
+        title,
+        price,
+        option: selected,
+        quantity: 1,
+        options,
+      };
+      addWishItem.mutate(product);
+    }
   };
 
   return (
@@ -81,7 +86,7 @@ export default function ProductDetail() {
               onClick={addToWishList}
               className='h-11 px-3 border border-black hover:bg-white transition duration-300'
             >
-              🤍
+              {isInWishList(id) ? '❤️' : '🤍'}
             </button>
           </div>
         ) : (

@@ -18,6 +18,10 @@ export default function useWishList() {
     { enabled: !!uid }
   );
 
+  const isInWishList = (id: string) => {
+    return wishListQuery.data?.some((product) => product.id === id);
+  };
+
   const addWishItem = useMutation<void, Error, IProduct>(
     (product) => addToWishList(uid, product),
     {
@@ -36,5 +40,5 @@ export default function useWishList() {
     }
   );
 
-  return { wishListQuery, addWishItem, removeWishItem };
+  return { wishListQuery, isInWishList, addWishItem, removeWishItem };
 }
