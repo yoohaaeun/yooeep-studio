@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { IProduct } from '../api/firebase';
 import useWishList from '../hooks/useWishList';
 import { formatNumberWithCommas } from '../utils';
@@ -17,14 +18,29 @@ export default function WishItem({
   const { removeWishItem } = useWishList();
   const isSelected = selectedProducts.includes(id);
   const handleDelete = () => removeWishItem.mutate(id);
+  const navigate = useNavigate();
 
   return (
     <li className='border-t border-black py-4 mb-2 text-xs sm:text-sm'>
       <div className='flex mb-8'>
-        <img className='w-24 mr-3' src={image} alt={title} />
+        <img
+          onClick={() => {
+            navigate(`/product/${id}`, { state: { product } });
+          }}
+          className='w-24 mr-3 cursor-pointer'
+          src={image}
+          alt={title}
+        />
         <div className='w-full h-32 flex justify-between  items-start'>
           <div className='font-semibold'>
-            <p className='mb-0.5'>{title}</p>
+            <p
+              onClick={() => {
+                navigate(`/product/${id}`, { state: { product } });
+              }}
+              className='mb-0.5 cursor-pointer'
+            >
+              {title}
+            </p>
             <p>
               KRW
               <span> {formatNumberWithCommas(price)}</span>

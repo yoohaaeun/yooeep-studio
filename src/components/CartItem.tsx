@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { IProduct } from '../api/firebase';
 import useCart from '../hooks/useCart';
 import { formatNumberWithCommas } from '../utils';
@@ -16,6 +17,8 @@ export default function CartItem({
   const { id, image, title, option, quantity, price } = product;
   const { addOrUpdateCartItem } = useCart();
 
+  const navigate = useNavigate();
+
   const handleMinus = () => {
     if (quantity < 2) return;
     addOrUpdateCartItem.mutate({ ...product, quantity: quantity - 1 });
@@ -29,10 +32,24 @@ export default function CartItem({
 
   return (
     <li className='flex flex-row border-t border-black py-4 mb-2'>
-      <img className='w-24 mr-3' src={image} alt={title} />
+      <img
+        onClick={() => {
+          navigate(`/product/${id}`, { state: { product } });
+        }}
+        className='w-24 mr-3 cursor-pointer'
+        src={image}
+        alt={title}
+      />
       <div className='w-full flex items-start justify-between'>
         <div>
-          <p className='mb-0.5'>{title}</p>
+          <p
+            onClick={() => {
+              navigate(`/product/${id}`, { state: { product } });
+            }}
+            className='mb-0.5 cursor-pointer'
+          >
+            {title}
+          </p>
           <p className='mb-2'>
             [옵션 : <span>{option}</span>]
           </p>
