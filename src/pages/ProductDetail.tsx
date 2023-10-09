@@ -1,6 +1,7 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { IProduct } from '../api/firebase';
+import ProductOptions from '../components/ProductOptions';
 import { useAuthContext } from '../context/AuthContext';
 import useCart from '../hooks/useCart';
 import useWishList from '../hooks/useWishList';
@@ -16,10 +17,8 @@ export default function ProductDetail() {
       product: { id, image, title, description, category, price, options },
     },
   } = useLocation();
-  const [selected, setSelected] = useState<string>(DEFAULT_OPTION);
 
-  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) =>
-    setSelected(e.target.value);
+  const [selected, setSelected] = useState<string>(DEFAULT_OPTION);
 
   const addToCart = () => {
     if (selected === null || selected === DEFAULT_OPTION) {
@@ -33,12 +32,13 @@ export default function ProductDetail() {
         price,
         option: selected,
         quantity: 1,
+        options,
       };
       addOrUpdateCartItem.mutate(product);
     }
   };
 
-  const addToWishList = (e: MouseEvent<HTMLButtonElement>) => {
+  const addToWishList = () => {
     alert('관심상품으로 등록되었습니다.');
     const product: IProduct = {
       id,
@@ -47,6 +47,7 @@ export default function ProductDetail() {
       price,
       option: selected,
       quantity: 1,
+      options,
     };
     addWishItem.mutate(product);
   };
@@ -63,21 +64,11 @@ export default function ProductDetail() {
         <p className='text-sm mb-8 font-bold'>
           KRW {formatNumberWithCommas(price)}
         </p>
-        <div className='flex flex-col mb-8'>
-          <label className='text-sm font-medium text-gray-400 mb-2'>SIZE</label>
-          <select
-            id='select'
-            className='w-1/2 py-2.5 px-1 flex-1 border border-black outline-none bg-transparent cursor-pointer'
-            onChange={handleSelect}
-            value={selected}
-          >
-            <option disabled>{DEFAULT_OPTION}</option>
-            {options &&
-              options.map((option: string, index: number) => (
-                <option key={index}>{option}</option>
-              ))}
-          </select>
-        </div>
+        <ProductOptions
+          selected={selected}
+          setSelected={setSelected}
+          options={options}
+        />
         {user ? (
           <div className='flex gap-1'>
             <button

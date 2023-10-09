@@ -88,10 +88,10 @@ export interface IProduct {
   category?: string;
   description?: string;
   image: string;
-  options?: string[];
+  options: string[];
   price: number;
   title: string;
-  option?: string | number;
+  option: string | number;
   quantity: number;
 }
 
