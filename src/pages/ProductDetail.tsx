@@ -6,6 +6,7 @@ import { useAuthContext } from '../context/AuthContext';
 import useCart from '../hooks/useCart';
 import useWishList from '../hooks/useWishList';
 import { formatNumberWithCommas } from '../utils';
+import { BsBalloonHeart, BsBalloonHeartFill } from 'react-icons/bs';
 
 export default function ProductDetail() {
   const authContext = useAuthContext();
@@ -84,9 +85,9 @@ export default function ProductDetail() {
             </button>
             <button
               onClick={addToWishList}
-              className='h-11 px-3 border border-black hover:bg-white transition duration-300'
+              className='h-11 px-3 border border-black hover:bg-white transition duration-300 text-base'
             >
-              {isInWishList(id) ? '❤️' : '🤍'}
+              {isInWishList(id) ? <BsBalloonHeartFill /> : <BsBalloonHeart />}
             </button>
           </div>
         ) : (

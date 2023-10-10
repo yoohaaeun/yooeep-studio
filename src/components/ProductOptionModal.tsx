@@ -4,6 +4,8 @@ import useCart from '../hooks/useCart';
 import { formatNumberWithCommas } from '../utils';
 import ProductOptions from './ProductOptions';
 
+import { AiOutlineClose } from 'react-icons/ai';
+
 interface ProductOptionModalProps {
   product: IProduct;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,7 +47,9 @@ export default function ProductOptionModal({
       <div className='w-72 sm:w-80 md:w-96 h-fit fixed inset-2/4 transform -translate-x-1/2 -translate-y-1/2 z-20 border border-black bg-white '>
         <div className='flex justify-between px-3 py-1 border-b border-black'>
           <p>옵션 선택</p>
-          <button onClick={() => setIsModalOpen(false)}>X</button>
+          <button onClick={() => setIsModalOpen(false)}>
+            <AiOutlineClose />
+          </button>
         </div>
         <div className='p-3'>
           <p className='mb-1 font-semibold'>{title}</p>
