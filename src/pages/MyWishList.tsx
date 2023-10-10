@@ -66,9 +66,12 @@ export default function MyWishList() {
               선택삭제
             </button>
           </div>
-          <div className='py-3 border border-black text-center text-xs sm:text-sm'>
+          <button
+            onClick={() => alert('서비스 준비 중입니다. 조금만 기다려주세요.')}
+            className='w-full py-3 border border-black text-center text-xs sm:text-sm'
+          >
             전체상품주문
-          </div>
+          </button>
         </>
       )}
     </section>

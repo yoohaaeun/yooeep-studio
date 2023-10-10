@@ -72,7 +72,10 @@ export default function WishItem({
               장바구니담기
             </button>
           </div>
-          <button className='py-1.5 px-2.5 border border-black'>
+          <button
+            onClick={() => alert('서비스 준비 중입니다. 조금만 기다려주세요.')}
+            className='py-1.5 px-2.5 border border-black'
+          >
             주문하기
           </button>
         </div>

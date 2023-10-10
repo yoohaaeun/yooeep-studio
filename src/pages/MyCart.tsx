@@ -128,7 +128,10 @@ export default function MyCart() {
             </div>
           </div>
 
-          <button className='border border-black w-full py-2.5 mb-4 text-xs uppercase'>
+          <button
+            onClick={() => alert('서비스 준비 중입니다. 조금만 기다려주세요.')}
+            className='border border-black w-full py-2.5 mb-4 text-xs uppercase'
+          >
             check out
           </button>
 
