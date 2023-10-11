@@ -4,12 +4,7 @@ export default function Home() {
   return (
     <>
       <img
-        src='/images/main.jpg'
-        alt='Yooeep Studio Logo'
-        className='w-screen h-screen object-cover object-center'
-      />
-      <img
-        src='/images/main-shoes.jpg'
+        src='/images/bg-main.jpg'
         alt='Yooeep Studio Logo'
         className='w-screen h-screen object-cover object-center'
       />

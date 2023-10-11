@@ -11,7 +11,7 @@ export default function Bag() {
         location.pathname === '/'
           ? 'text-white border-white'
           : 'text-black border-black'
-      } hover:border-b  transition-all duration-300 ease-in-out`}
+      } hover:border-b`}
     >
       Bag
       <CartStatus />

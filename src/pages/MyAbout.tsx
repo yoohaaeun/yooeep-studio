@@ -1,9 +1,28 @@
+import { useState, useEffect } from 'react';
+
 export default function About() {
+  const [backgroundImage, setBackgroundImage] = useState('');
+
+  useEffect(() => {
+    const backgroundImages = [
+      '/images/bg-about-01.jpg',
+      '/images/bg-about-02.jpg',
+      '/images/bg-about-03.jpg',
+      '/images/bg-about-04.jpg',
+      '/images/bg-about-05.jpg',
+    ];
+
+    const randomImage =
+      backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+
+    setBackgroundImage(randomImage);
+  }, []);
+
   return (
     <section
       className='w-screen h-screen'
       style={{
-        backgroundImage: "url('/images/main2.jpg')",
+        backgroundImage: `url('${backgroundImage}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -13,7 +32,7 @@ export default function About() {
           <h2 className='font-medium text-lg text-center uppercase'>about</h2>
         </div>
 
-        <p className='px-10 sm:px-20 lg:px-40 text-xs sm:text-sm leading-5 sm:leading-6 text-gray-300'>
+        <p className='px-10 sm:px-20 lg:px-40 text-xs sm:text-sm leading-5 sm:leading-6'>
           <span className='font-bold'>이미지 출처 정보</span>
           <br />
           Yooeep Studio에서 사용된 이미지는 Acne Studios의 제품, 디자인, 및
