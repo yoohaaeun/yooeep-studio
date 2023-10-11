@@ -35,6 +35,11 @@ export default function MyCart() {
   };
 
   const handleDeleteSelectedProducts = () => {
+    if (selectedProducts.length === 0) {
+      alert('선택된 상품이 없습니다.');
+      return;
+    }
+
     selectedProducts.forEach((productId) => {
       removeCartItem.mutate(productId);
     });
