@@ -1,11 +1,18 @@
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { IUser, login, logout, onUserStateChange } from '../api/firebase';
+import { adminUser, IUser, login, logout } from '../api/firebase';
 
 export interface AuthContextType {
   user: IUser | null;
   uid: string | null;
   login: () => void;
   logout: () => void;
+  loading: boolean;
+}
+
+interface AuthStateType {
+  user: IUser | null;
+  loading: boolean;
 }
 
 interface AuthContextProviderProps {
@@ -15,17 +22,29 @@ interface AuthContextProviderProps {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [authState, setAuthState] = useState<AuthStateType>({
+    user: null,
+    loading: true,
+  });
+
+  const user = authState.user;
+  const loading = authState.loading;
 
   useEffect(() => {
-    onUserStateChange((updatedUser) => {
-      setUser(updatedUser);
+    const stopListen = onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        adminUser(user).then((user) => setAuthState({ user, loading: false }));
+      } else {
+        setAuthState({ user: null, loading: false });
+      }
     });
+
+    return () => stopListen();
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, uid: user && user.uid, login, logout }}
+      value={{ user, uid: user && user.uid, login, logout, loading }}
     >
       {children}
     </AuthContext.Provider>

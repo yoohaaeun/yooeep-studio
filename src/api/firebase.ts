@@ -33,6 +33,7 @@ export function logout() {
 export interface IUser extends User {
   displayName: string;
   isAdmin: boolean;
+  uid: string;
 }
 
 export async function onUserStateChange(
@@ -44,7 +45,7 @@ export async function onUserStateChange(
   });
 }
 
-async function adminUser(user: User | null): Promise<IUser | null> {
+export async function adminUser(user: User | null): Promise<IUser | null> {
   if (!user) {
     return null;
   }

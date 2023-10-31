@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useAuthContext } from '../context/AuthContext';
@@ -14,11 +14,9 @@ export default function ProtectedRoute({
 }: ProtectedRouteProps) {
   const authContext = useAuthContext();
 
-  const { user } = authContext || {};
+  const { user, loading } = authContext || {};
 
-  useEffect(() => {}, [user]);
-
-  if (user === null) {
+  if (loading) {
     return <LoadingSpinner />;
   }
 
