@@ -40,7 +40,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     });
 
     return () => stopListen();
-  }, [adminUser, getAuth]);
+  }, []);
 
   return (
     <AuthContext.Provider
