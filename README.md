@@ -1,46 +1,21 @@
-# Getting Started with Create React App
+# Yooeep : a time for yourself 💛
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Yooeep Studio는 최신 패션 트렌드를 탐색하고 스타일을 찾을 수 있는 온라인 쇼핑 플랫폼으로, 다양한 편의 기능과 옵션으로 온라인 쇼핑 경험을 제공합니다.
 
-## Available Scripts
+## Yooeep Studio 쇼핑몰 사이트
 
-In the project directory, you can run:
+React와 Firebase를 활용하여 개발된 쇼핑몰 앱입니다. 사용자는 Google 계정으로 편리하게 가입할 수 있으며, 간편하게 위시리스트와 장바구니에 원하는 제품을 추가할 수 있습니다. 관리자는 실시간으로 구매 항목을 업데이트할 수 있습니다. 
 
-### `npm start`
+### 주요 기능
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **로그인:** Firebase를 사용한 Google OAuth 로그인 구현
+- **사용자 분기 처리:** 일반 사용자 및 관리자 사용자를 위한 사용자 분기 처리
+- **인증:** 로그인 상태 확인을 통한 사용자 인증 구현
+- **권한 부여:** 권한에 따른 기능 및 접근 권한 설정 (일반 사용자, 관리자)
+- **Firebase 연동:** Google 로그인 및 실시간 데이터베이스 사용을 통한 Firebase 연동
+- **Firebase API 활용:** CREATE (추가), READ (목록 및 상세 정보), UPDATE (수정), DELETE (삭제) API 사용 (useQuery 활용)
+- **장바구니 기능:** 제품 추가 및 삭제 시 장바구니 수량 업데이트 및 수량 변경 시 총 주문 가격 업데이트
+- **장바구니 항목 삭제:** 장바구니 내 상품 삭제 구현
+- **관심상품 기능:** 사용자가 관심을 표시한 상품을 관리하며, 해당 상품을 삭제하거나 필요할 때 해당 상품을 바로 장바구니에 추가할 수 있는 기능을 구현
+- **관리자 기능:** 제품 등록 및 이미지 업로드 (Cloudinary 활용, Firebase에 새 제품 추가)
+- **반응형 UI:** 데스크톱, 태블릿, 모바일 지원을 위한 반응형 UI 구현
